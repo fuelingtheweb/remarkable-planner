@@ -22,7 +22,7 @@ class PlannerController extends Controller
 
     public function day($year, $month, $day)
     {
-        return view('planner', [
+        return view('day', [
             'calendar' => Calendar::buildMonth($year, $month, $day),
             'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
         ]);
