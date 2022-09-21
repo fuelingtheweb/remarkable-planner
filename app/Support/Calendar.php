@@ -49,12 +49,14 @@ class Calendar
                     'withinMonth' => $date->between($monthStart, $monthEnd),
                 ])
                 ->chunk(7),
-            'days' => collect($monthStart->toPeriod($monthEnd)->toArray())
-                ->map(fn ($date) => [
-                    'path' => $date->format('/Y/m/d'),
-                    'date' => $date,
-                    'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
-                ])
+            'days' => $monthEnd->isPast()
+                ? collect()
+                : collect($monthStart->toPeriod($monthEnd)->toArray())
+                    ->map(fn ($date) => [
+                        'path' => $date->format('/Y/m/d'),
+                        'date' => $date,
+                        'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
+                    ])
         ];
     }
 }
