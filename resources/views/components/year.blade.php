@@ -1,6 +1,8 @@
 @props(['calendar'])
 
 <x-viewport>
+    <a name="{{ $calendar['year'] }}"></a>
+
     <div class="p-4 mb-2 text-4xl text-center text-white bg-gray-900">
         {{ $calendar['year'] }}
     </div>

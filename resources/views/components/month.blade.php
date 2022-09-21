@@ -3,11 +3,23 @@
 <table class="m-auto text-xs text-center month">
     <thead>
         <tr>
-            @foreach (['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as $day)
+            @foreach (['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as $index => $day)
                 <th>
-                    <a href="" class="block py-0.5 hover:bg-gray-300">
-                        {{ $day }}
-                    </a>
+                    @if ($date)
+                        @php
+                            $targetDate = $date->startOfWeek(Carbon\Carbon::SUNDAY)->addDays($index);
+                        @endphp
+                        <a
+                            href="#{{ $targetDate->toDateString() }}"
+                            class="block py-0.5 hover:bg-gray-300 {{ $targetDate->is($date) ? 'text-gray-800 font-bold bg-gray-200' : '' }}"
+                        >
+                            {{ $day }}
+                        </a>
+                    @else
+                        <span class="block py-0.5">
+                            {{ $day }}
+                        </span>
+                    @endif
                 </th>
             @endforeach
         </tr>
@@ -18,7 +30,7 @@
                 @foreach ($days as $day)
                     <td>
                         <a
-                            href="{{ $date['path'] }}"
+                            href="#{{ $day['date']->toDateString() }}"
                             class="
                                 block
                                 py-0.5
