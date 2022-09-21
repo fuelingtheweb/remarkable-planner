@@ -9,6 +9,6 @@
     @vite(['resources/css/app.css'])
 </head>
 <body>
-    <x-day :calendar="$calendar" :tasks="$tasks" />
+    <x-day :calendar="$calendar" :date="$calendar['date']" :tasks="$tasks" />
 </body>
 </html>

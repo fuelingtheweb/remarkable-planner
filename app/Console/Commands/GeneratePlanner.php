@@ -22,6 +22,7 @@ class GeneratePlanner extends Command
             ->setExtraHttpHeaders(['X-Printing-Pdf' => 'true'])
             ->showBackground()
             ->paperSize(596, 795, 'px')
+            ->timeout(120)
             ->save(storage_path('planner.pdf'));
 
         $this->info('Planner generated');

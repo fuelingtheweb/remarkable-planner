@@ -7,6 +7,17 @@ use Carbon\CarbonImmutable;
 
 class Calendar
 {
+    public static function buildAll()
+    {
+        $year  = now()->year;
+
+        return [
+            'year' => $year,
+            'months' => collect(range(1, 12))
+                ->map(fn ($month) => static::buildMonth($year, $month)),
+        ];
+    }
+
     public static function buildYear($year)
     {
         return [
@@ -43,6 +54,12 @@ class Calendar
                     'selected' => $days->where('selected')->isNotEmpty(),
                     'days' => $days,
                 ]),
+            'days' => collect($monthStart->toPeriod($monthEnd)->toArray())
+                ->map(fn ($date) => [
+                    'path' => $date->format('/Y/m/d'),
+                    'date' => $date,
+                    'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
+                ])
         ];
     }
 }

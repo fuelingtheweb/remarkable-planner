@@ -1,10 +1,10 @@
-@props(['calendar', 'tasks'])
+@props(['calendar', 'date', 'tasks'])
 
 <x-viewport>
     <div class="flex items-center justify-between px-1 pt-4">
         <div class="ml-2 w-[205px] text-center">
             <div class="text-lg tracking-widest uppercase">
-                {{ $calendar['date']->format('F') }}
+                {{ $date->format('F') }}
             </div>
 
             <div class="flex items-center justify-center gap-0.5 text-7xl font-bold leading-[3.8rem]">
@@ -13,7 +13,7 @@
                 </a>
 
                 <span>
-                    {{ $calendar['date']->format('d') }}
+                    {{ $date->format('j') }}
                 </span>
 
                 <a href="" class="text-gray-400">
@@ -22,14 +22,14 @@
             </div>
 
             <div class="text-3xl tracking-widest uppercase">
-                {{ $calendar['date']->format('l') }}
+                {{ $date->format('l') }}
             </div>
         </div>
 
         <div class="w-[180px]">
             <a href="/" class="block text-sm text-center hover:bg-gray-300">
                 <span>
-                    {{ $calendar['date']->format('F Y') }}
+                    {{ $date->format('F Y') }}
                 </span>
             </a>
 
