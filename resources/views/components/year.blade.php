@@ -7,7 +7,7 @@
         {{ $calendar['year'] }}
     </div>
 
-    <div class="grid grid-cols-3 px-2 pb-8 gap-x-2 gap-y-3">
+    <div class="grid grid-cols-3 px-2 gap-x-2 gap-y-2">
         @foreach ($calendar['months'] as $month)
             <div>
                 <div class="p-1 mb-1 text-xl text-center text-white bg-gray-800">

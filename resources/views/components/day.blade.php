@@ -3,7 +3,7 @@
 <x-viewport>
     <a name="{{ $date->toDateString() }}"></a>
 
-    <div class="flex items-center justify-between px-1 pt-4">
+    <div class="flex items-center justify-between px-1 pt-6">
         <div class="ml-2 w-[205px] text-center">
             <div class="text-lg tracking-widest uppercase">
                 {{ $date->format('F') }}
