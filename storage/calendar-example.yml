@@ -1,0 +1,36 @@
+days:
+  sunday:
+    - template: todo
+      lines:
+        - Plan week
+    - template: notes
+
+  monday:
+    - template: todo
+      lines:
+        -
+        -
+        -
+        - 12pm - Sample task
+    - template: notes
+
+  tuesday:
+    - template: todo
+    - template: notes
+    - template: blank
+
+  wednesday:
+    - template: todo
+    - template: notes
+
+  thursday:
+    - template: todo
+    - template: notes
+
+  friday:
+    - template: todo
+    - template: notes
+
+  saturday:
+    - template: todo
+    - template: notes
