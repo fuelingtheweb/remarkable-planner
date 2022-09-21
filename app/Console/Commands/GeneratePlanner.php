@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Console\Command;
+use Spatie\Browsershot\Browsershot;
 
 class GeneratePlanner extends Command
 {
@@ -13,9 +13,16 @@ class GeneratePlanner extends Command
 
     public function handle()
     {
-        $pdf = Pdf::loadView('pdf.planner')->setPaper([0.0, 0.0, 445.0392, 592.4412]);
+        // reMarkable screen size: https://support.remarkable.com/hc/en-us/articles/360006699557
+        // original tablet pixel size / table dpi * browser dpi
+        // 1404 / 226 * 96
+        // 1872 / 226 * 96
 
-        $pdf->save(storage_path('planner.pdf'));
+        Browsershot::url(url('/2022/02/22'))
+            ->setExtraHttpHeaders(['X-Printing-Pdf' => 'true'])
+            ->showBackground()
+            ->paperSize(596, 795, 'px')
+            ->save(storage_path('planner.pdf'));
 
         $this->info('Planner generated');
     }
