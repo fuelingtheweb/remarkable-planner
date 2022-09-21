@@ -68,10 +68,14 @@ class Calendar
         return collect(data_get($yaml, 'days.' . strtolower($date->format('l'))) ?: [['template' => 'todo']])
             ->map(function ($page) {
                 $template = data_get($page, 'template', 'todo');
+                $lines = collect(data_get($page, 'lines', []));
 
                 return [
                     'template' => $template,
-                    'lines' => $template == 'blank' ? [] : range(1, 22),
+                    'lines' => $template == 'blank'
+                        ? []
+                        : collect(range(1, 22))
+                            ->map(fn ($index) => $lines->get($index - 1, ''))
                 ];
             });
     }

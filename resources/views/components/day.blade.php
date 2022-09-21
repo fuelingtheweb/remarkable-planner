@@ -47,7 +47,11 @@
                 @endif
 
                 <div class="flex-1 pt-1 pl-2 leading-tight border-b border-gray-400">
-                    &nbsp;
+                    @if ($line)
+                        {{ $line }}
+                    @else
+                        &nbsp;
+                    @endif
                 </div>
             </div>
         @endforeach
