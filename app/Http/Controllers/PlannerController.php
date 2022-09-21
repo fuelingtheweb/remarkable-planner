@@ -6,6 +6,15 @@ use App\Support\Calendar;
 
 class PlannerController extends Controller
 {
+    public function all()
+    {
+        return view('all', [
+            'year' => Calendar::buildYear(now()->year),
+            'month' => Calendar::buildMonth(2022, 2, 22),
+            'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
+        ]);
+    }
+
     public function tasks()
     {
         return view('tasks', [

@@ -4,11 +4,13 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ $calendar['year'] }}</title>
+    <title>Planner</title>
 
     @vite(['resources/css/app.css'])
 </head>
 <body>
-    <x-year :calendar="$calendar" />
+    <x-year :calendar="$year" />
+
+    <x-day :calendar="$month" :tasks="$tasks" />
 </body>
 </html>

@@ -18,7 +18,7 @@ class GeneratePlanner extends Command
         // 1404 / 226 * 96
         // 1872 / 226 * 96
 
-        Browsershot::url(url('/2022/02/22'))
+        Browsershot::url(url('/all'))
             ->setExtraHttpHeaders(['X-Printing-Pdf' => 'true'])
             ->showBackground()
             ->paperSize(596, 795, 'px')
