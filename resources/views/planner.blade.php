@@ -36,11 +36,11 @@
             </div>
 
             <div class="w-[180px]">
-                <div class="flex items-center justify-center gap-0.5 text-sm">
+                <a href="/" class="block text-sm text-center hover:bg-gray-300">
                     <span>
                         {{ $calendar['date']->format('F Y') }}
                     </span>
-                </div>
+                </a>
 
                 <x-month :weeks="$calendar['weeks']" />
             </div>
