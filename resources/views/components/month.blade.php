@@ -13,9 +13,9 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($weeks as $days)
-            <tr>
-                @foreach ($days as $date)
+        @foreach ($weeks as $week)
+            <tr class="{{ $week['selected'] ? 'border' : '' }}">
+                @foreach ($week['days'] as $date)
                     <td>
                         <a
                             href="{{ $date['path'] }}"

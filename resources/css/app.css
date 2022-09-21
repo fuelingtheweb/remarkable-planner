@@ -5,3 +5,12 @@
 .month th {
     width: 40px;
 }
+
+.month th, .month td {
+    overflow: hidden;
+}
+
+.month a {
+    margin: -10px;
+    padding: 10px;
+}

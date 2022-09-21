@@ -38,7 +38,11 @@ class Calendar
                     'withinMonth' => $date->between($monthStart, $monthEnd),
                     'selected' => $day && $date->is($selectedDate),
                 ])
-                ->chunk(7),
+                ->chunk(7)
+                ->map(fn ($days) => [
+                    'selected' => $days->where('selected')->isNotEmpty(),
+                    'days' => $days,
+                ]),
         ];
     }
 }
