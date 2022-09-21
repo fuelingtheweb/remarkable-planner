@@ -13,7 +13,9 @@
 
     @foreach ($calendar['months'] as $month)
         @foreach ($month['days'] as $day)
-            <x-day :calendar="$month" :date="$day['date']" :tasks="$day['tasks']" />
+            @foreach ($day['pages'] as $page)
+                <x-day :calendar="$month" :date="$day['date']" :template="$page['template']" :lines="$page['lines']" />
+            @endforeach
         @endforeach
     @endforeach
 </body>

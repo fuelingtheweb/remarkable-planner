@@ -4,6 +4,7 @@ namespace App\Support;
 
 use Carbon\Carbon;
 use Carbon\CarbonImmutable;
+use Symfony\Component\Yaml\Yaml;
 
 class Calendar
 {
@@ -35,6 +36,8 @@ class Calendar
         $start = $monthStart->startOfWeek(Carbon::SUNDAY);
         $end = $monthEnd->endOfWeek(Carbon::SATURDAY);
 
+        $yaml = Yaml::parse(file_get_contents(storage_path('calendar.yml')));
+
         return [
             'date' => $selectedDate,
             'year' => $selectedDate->year,
@@ -55,8 +58,21 @@ class Calendar
                     ->map(fn ($date) => [
                         'path' => $date->format('/Y/m/d'),
                         'date' => $date,
-                        'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
+                        'pages' => Calendar::pagesForDate($yaml, $date),
                     ])
         ];
+    }
+
+    public static function pagesForDate($yaml, $date)
+    {
+        return collect(data_get($yaml, 'days.' . strtolower($date->format('l'))) ?: [['template' => 'todo']])
+            ->map(function ($page) {
+                $template = data_get($page, 'template', 'todo');
+
+                return [
+                    'template' => $template,
+                    'lines' => $template == 'blank' ? [] : range(1, 22),
+                ];
+            });
     }
 }

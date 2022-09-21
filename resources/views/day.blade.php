@@ -9,6 +9,8 @@
     @vite(['resources/css/app.css'])
 </head>
 <body>
-    <x-day :calendar="$calendar" :date="$calendar['date']" :tasks="$tasks" />
+    @foreach ($pages as $page)
+        <x-day :calendar="$calendar" :date="$calendar['date']" :template="$page['template']" :lines="$page['lines']" />
+    @endforeach
 </body>
 </html>

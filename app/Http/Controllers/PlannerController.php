@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Support\Calendar;
+use Carbon\Carbon;
+use Symfony\Component\Yaml\Yaml;
 
 class PlannerController extends Controller
 {
@@ -16,7 +18,7 @@ class PlannerController extends Controller
     public function tasks()
     {
         return view('tasks', [
-            'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
+            'tasks' => Yaml::parse(file_get_contents(storage_path('tasks.yml'))),
         ]);
     }
 
@@ -29,9 +31,11 @@ class PlannerController extends Controller
 
     public function day($year, $month, $day)
     {
+        $yaml = Yaml::parse(file_get_contents(storage_path('calendar.yml')));
+
         return view('day', [
             'calendar' => Calendar::buildMonth($year, $month, $day),
-            'tasks' => str(file_get_contents(storage_path('tasks.yml')))->trim()->explode("\n"),
+            'pages' => Calendar::pagesForDate($yaml, Carbon::create($year, $month, $day)),
         ]);
     }
 }

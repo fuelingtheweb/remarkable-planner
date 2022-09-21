@@ -1,4 +1,4 @@
-@props(['calendar', 'date', 'tasks'])
+@props(['calendar', 'date', 'template' => 'todo', 'lines' => []])
 
 <x-viewport>
     <a name="{{ $date->toDateString() }}"></a>
@@ -40,12 +40,14 @@
     </div>
 
     <div class="flex flex-col gap-0.5 mt-1">
-        @foreach ($tasks as $task)
+        @foreach ($lines as $line)
             <div class="flex items-end">
-                <div class="w-5 h-5 mx-2 border border-gray-400"></div>
+                @if ($template == 'todo')
+                    <div class="w-5 h-5 mx-2 border border-gray-400"></div>
+                @endif
 
                 <div class="flex-1 pt-1 pl-2 leading-tight border-b border-gray-400">
-                    {{ $task }}
+                    &nbsp;
                 </div>
             </div>
         @endforeach
