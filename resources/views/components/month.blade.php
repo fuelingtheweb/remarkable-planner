@@ -1,4 +1,4 @@
-@props(['weeks'])
+@props(['weeks', 'date' => null])
 
 <table class="m-auto text-xs text-center month">
     <thead>
@@ -13,9 +13,9 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($weeks as $week)
-            <tr class="{{ $week['selected'] ? 'border' : '' }}">
-                @foreach ($week['days'] as $date)
+        @foreach ($weeks as $days)
+            <tr class="{{ $date && $days->filter(fn ($day) => $day['date']->is($date))->isNotEmpty() ? 'border' : '' }}">
+                @foreach ($days as $day)
                     <td>
                         <a
                             href="{{ $date['path'] }}"
@@ -23,11 +23,11 @@
                                 block
                                 py-0.5
                                 hover:bg-gray-300
-                                {{ ! $date['withinMonth'] ? 'text-gray-300' : '' }}
-                                {{ $date['selected'] ? 'font-bold bg-gray-200' : '' }}
+                                {{ ! $day['withinMonth'] ? 'text-gray-300' : '' }}
+                                {{ $date && $day['date']->is($date) ? 'font-bold bg-gray-200' : '' }}
                             "
                         >
-                            {{ $date['day'] }}
+                            {{ $day['day'] }}
                         </a>
                     </td>
                 @endforeach

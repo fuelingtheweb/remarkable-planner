@@ -47,13 +47,8 @@ class Calendar
                     'month' => $date->month,
                     'day' => $date->day,
                     'withinMonth' => $date->between($monthStart, $monthEnd),
-                    'selected' => $day && $date->is($selectedDate),
                 ])
-                ->chunk(7)
-                ->map(fn ($days) => [
-                    'selected' => $days->where('selected')->isNotEmpty(),
-                    'days' => $days,
-                ]),
+                ->chunk(7),
             'days' => collect($monthStart->toPeriod($monthEnd)->toArray())
                 ->map(fn ($date) => [
                     'path' => $date->format('/Y/m/d'),

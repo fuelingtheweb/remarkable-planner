@@ -33,7 +33,7 @@
                 </span>
             </a>
 
-            <x-month :weeks="$calendar['weeks']" />
+            <x-month :weeks="$calendar['weeks']" :date="$date" />
         </div>
     </div>
 
