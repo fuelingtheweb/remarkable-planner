@@ -11,12 +11,12 @@
 <body>
     <x-viewport>
         <div class="flex items-center justify-between px-1 pt-4">
-            <div class="ml-8 text-center">
+            <div class="ml-2 w-[205px] text-center">
                 <div class="text-lg tracking-widest uppercase">
                     {{ $calendar['date']->format('F') }}
                 </div>
 
-                <div class="flex items-center gap-0.5 text-7xl font-bold leading-[3.8rem]">
+                <div class="flex items-center justify-center gap-0.5 text-7xl font-bold leading-[3.8rem]">
                     <a href="" class="text-gray-400">
                         <x-arrow-left />
                     </a>
