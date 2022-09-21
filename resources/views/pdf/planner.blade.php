@@ -9,12 +9,33 @@
     @css('css/app.css')
 </head>
 <body>
-    <table class="w-full h-full">
-        <tr>
-            <td>
-                <div class="bg-gray-100 dark:bg-gray-900 p-4 text-4xl text-center">2022</div>
-            </td>
-        </tr>
+    <div class="p-4 text-4xl text-center bg-gray-100 dark:bg-gray-900">2022</div>
+
+    <table class="w-full text-center">
+        <thead>
+            <tr>
+                <th>Su</th>
+                <th>Mo</th>
+                <th>Tu</th>
+                <th>We</th>
+                <th>Th</th>
+                <th>Fr</th>
+                <th>Sa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($weeks as $days)
+                <tr>
+                    @foreach ($days as $date)
+                        <td>
+                            <div class="text-red-100">
+                                {{ $date->day }}
+                            </div>
+                        </td>
+                    @endforeach
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 </body>
 </html>
