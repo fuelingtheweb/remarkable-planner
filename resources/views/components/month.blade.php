@@ -3,13 +3,13 @@
 <table class="m-auto text-xs text-center month">
     <thead>
         <tr>
-            <th>Su</th>
-            <th>Mo</th>
-            <th>Tu</th>
-            <th>We</th>
-            <th>Th</th>
-            <th>Fr</th>
-            <th>Sa</th>
+            @foreach (['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as $day)
+                <th>
+                    <a href="" class="block py-0.5 hover:bg-gray-300">
+                        {{ $day }}
+                    </a>
+                </th>
+            @endforeach
         </tr>
     </thead>
     <tbody>
