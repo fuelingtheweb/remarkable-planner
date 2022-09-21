@@ -14,12 +14,12 @@
             Tasks
         </div>
 
-        <div class="flex flex-col gap-4 m-8 ml-20">
+        <div class="flex flex-col gap-0.5 mt-1">
             @foreach ($tasks as $task)
                 <div class="flex items-end">
-                    <div class="w-8 h-8 border border-gray-400"></div>
+                    <div class="w-5 h-5 mx-2 border border-gray-400"></div>
 
-                    <div class="flex-1 pl-4 ml-4 border-b border-gray-400">
+                    <div class="flex-1 pt-1 pl-2 leading-tight border-b border-gray-400">
                         {{ $task }}
                     </div>
                 </div>
