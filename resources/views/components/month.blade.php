@@ -11,7 +11,7 @@
                         @endphp
                         <a
                             href="#{{ $targetDate->toDateString() }}"
-                            class="block py-0.5 hover:bg-gray-300 {{ $targetDate->is($date) ? 'text-gray-800 font-bold bg-gray-200' : '' }}"
+                            class="block py-0.5 hover:bg-gray-300 {{ $targetDate->is($date) ? 'font-bold bg-gray-200' : '' }}"
                         >
                             {{ $day }}
                         </a>
