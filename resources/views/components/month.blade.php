@@ -3,7 +3,7 @@
 <table class="m-auto text-xs text-center month">
     <thead>
         <tr>
-            @foreach (['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'] as $index => $day)
+            @foreach ($weeks->first() as $index => $day)
                 <th>
                     @if ($date)
                         @php
@@ -13,11 +13,11 @@
                             href="#{{ $targetDate->toDateString() }}"
                             class="block py-0.5 hover:bg-gray-300 {{ $targetDate->is($date) ? 'font-bold bg-gray-200' : '' }}"
                         >
-                            {{ $day }}
+                            {{ str($day['date']->format('D'))->limit(2, '') }}
                         </a>
                     @else
                         <span class="block py-0.5">
-                            {{ $day }}
+                            {{ str($day['date']->format('D'))->limit(2, '') }}
                         </span>
                     @endif
                 </th>

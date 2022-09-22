@@ -30,13 +30,14 @@ class Calendar
 
     public static function buildMonth($year, $month, $day = null)
     {
+        $yaml = Yaml::parse(file_get_contents(storage_path('calendar.yml')));
+        $weekStartsOn = constant(Carbon::class . '::' . strtoupper(data_get($yaml, 'config.weekStartsOn', 'sunday')));
+
         $selectedDate = CarbonImmutable::create($year, $month, $day ?? 1);
         $monthStart = $selectedDate->startOfMonth();
         $monthEnd = $selectedDate->endOfMonth();
-        $start = $monthStart->startOfWeek(Carbon::SUNDAY);
-        $end = $monthEnd->endOfWeek(Carbon::SATURDAY);
-
-        $yaml = Yaml::parse(file_get_contents(storage_path('calendar.yml')));
+        $start = $monthStart->startOfWeek($weekStartsOn);
+        $end = $monthEnd->startOfWeek($weekStartsOn)->addDays(6)->endOfDay();
 
         return [
             'date' => $selectedDate,
