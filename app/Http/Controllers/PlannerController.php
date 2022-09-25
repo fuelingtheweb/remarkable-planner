@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Support\Calendar;
-use Carbon\Carbon;
+use App\Support\Day;
+use App\Support\Month;
+use App\Support\Year;
 use Symfony\Component\Yaml\Yaml;
 
 class PlannerController extends Controller
 {
     public function all()
     {
+        app('calendar')->useAnchors();
+
         return view('all', [
-            'calendar' => Calendar::buildAll(),
+            'year' => new Year(now()->year),
         ]);
     }
 
@@ -25,17 +28,15 @@ class PlannerController extends Controller
     public function year($year = null)
     {
         return view('year', [
-            'calendar' => Calendar::buildYear($year ??= now()->year)
+            'year' => new Year($year ??= now()->year),
         ]);
     }
 
     public function day($year, $month, $day)
     {
-        $yaml = Yaml::parse(file_get_contents(storage_path('calendar.yml')));
-
         return view('day', [
-            'calendar' => Calendar::buildMonth($year, $month, $day),
-            'pages' => Calendar::pagesForDate($yaml, Carbon::create($year, $month, $day)),
+            'day' => new Day($year, $month, $day),
+            'month' => new Month($year, $month, $day),
         ]);
     }
 }

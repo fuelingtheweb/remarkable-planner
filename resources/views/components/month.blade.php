@@ -1,23 +1,20 @@
-@props(['weeks', 'date' => null])
+@props(['month', 'selectedDate' => null])
 
 <table class="m-auto text-xs text-center month">
     <thead>
         <tr>
-            @foreach ($weeks->first() as $index => $day)
+            @foreach ($month->weekdays() as $index => $day)
                 <th>
-                    @if ($date)
-                        @php
-                            $targetDate = $date->startOfWeek(Carbon\Carbon::SUNDAY)->addDays($index);
-                        @endphp
+                    @if ($selectedDate)
                         <a
-                            href="#{{ $targetDate->toDateString() }}"
-                            class="block py-0.5 hover:bg-gray-300 {{ $targetDate->is($date) ? 'font-bold bg-gray-200' : '' }}"
+                            href="{{ $month->weekdayPath($selectedDate, $index) }}"
+                            class="block py-0.5 hover:bg-gray-300 {{ $month->weekday($selectedDate, $index)->is($selectedDate) ? 'font-bold bg-gray-200' : '' }}"
                         >
-                            {{ str($day['date']->format('D'))->limit(2, '') }}
+                            {{ $day }}
                         </a>
                     @else
                         <span class="block py-0.5">
-                            {{ str($day['date']->format('D'))->limit(2, '') }}
+                            {{ $day }}
                         </span>
                     @endif
                 </th>
@@ -25,21 +22,21 @@
         </tr>
     </thead>
     <tbody>
-        @foreach ($weeks as $days)
-            <tr class="{{ $date && $days->filter(fn ($day) => $day['date']->is($date))->isNotEmpty() ? 'border' : '' }}">
+        @foreach ($month->weeks() as $days)
+            <tr class="{{ $selectedDate && $days->filter(fn ($day) => $day->date->is($selectedDate))->isNotEmpty() ? 'border' : '' }}">
                 @foreach ($days as $day)
                     <td>
                         <a
-                            href="#{{ $day['date']->toDateString() }}"
+                            href="{{ $day->path() }}"
                             class="
                                 block
                                 py-0.5
                                 hover:bg-gray-300
-                                {{ ! $day['withinMonth'] ? 'text-gray-300' : '' }}
-                                {{ $date && $day['date']->is($date) ? 'font-bold bg-gray-200' : '' }}
+                                {{ $day->isNotWithin($month) ? 'text-gray-300' : '' }}
+                                {{ $day->is($selectedDate) ? 'font-bold bg-gray-200' : '' }}
                             "
                         >
-                            {{ $day['day'] }}
+                            {{ $day->label() }}
                         </a>
                     </td>
                 @endforeach

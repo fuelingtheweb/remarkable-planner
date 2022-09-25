@@ -1,20 +1,20 @@
-@props(['calendar'])
+@props(['year'])
 
 <x-viewport>
-    <a name="{{ $calendar['year'] }}"></a>
+    <a name="{{ $year->anchor() }}"></a>
 
     <div class="p-4 mb-2 text-4xl text-center text-white bg-gray-900">
-        {{ $calendar['year'] }}
+        {{ $year->label() }}
     </div>
 
     <div class="grid grid-cols-3 px-2 gap-x-2 gap-y-2">
-        @foreach ($calendar['months'] as $month)
+        @foreach ($year->months() as $month)
             <div>
                 <div class="p-1 mb-1 text-xl text-center text-white bg-gray-800">
-                    {{ $month['month'] }}
+                    {{ $month->label() }}
                 </div>
 
-                <x-month :weeks="$month['weeks']" />
+                <x-month :month="$month" />
             </div>
         @endforeach
     </div>

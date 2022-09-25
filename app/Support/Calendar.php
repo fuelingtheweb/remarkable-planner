@@ -8,76 +8,31 @@ use Symfony\Component\Yaml\Yaml;
 
 class Calendar
 {
-    public static function buildAll()
-    {
-        $year  = now()->year;
+    public $config;
+    public $useAnchors = false;
+    public $anchorFormat = 'Y/m/d';
 
-        return [
-            'year' => $year,
-            'months' => collect(range(1, 12))
-                ->map(fn ($month) => static::buildMonth($year, $month)),
-        ];
+    public function __construct()
+    {
+        $this->config = Yaml::parse(file_get_contents(storage_path('calendar.yml')));
     }
 
-    public static function buildYear($year)
+    public function useAnchors($useAnchors = true)
     {
-        return [
-            'year' => $year,
-            'months' => collect(range(1, 12))
-                ->map(fn ($month) => static::buildMonth($year, $month)),
-        ];
+        $this->useAnchors = $useAnchors;
+
+        return $this;
     }
 
-    public static function buildMonth($year, $month, $day = null)
+    public function path($anchor)
     {
-        $yaml = Yaml::parse(file_get_contents(storage_path('calendar.yml')));
-        $weekStartsOn = constant(Carbon::class . '::' . strtoupper(data_get($yaml, 'config.weekStartsOn', 'sunday')));
-
-        $selectedDate = CarbonImmutable::create($year, $month, $day ?? 1);
-        $monthStart = $selectedDate->startOfMonth();
-        $monthEnd = $selectedDate->endOfMonth();
-        $start = $monthStart->startOfWeek($weekStartsOn);
-        $end = $monthEnd->startOfWeek($weekStartsOn)->addDays(6)->endOfDay();
-
-        return [
-            'date' => $selectedDate,
-            'year' => $selectedDate->year,
-            'month' => $selectedDate->format('F'),
-            'weeks' => collect($start->toPeriod($end)->toArray())
-                ->map(fn ($date) => [
-                    'path' => $date->format('/Y/m/d'),
-                    'date' => $date,
-                    'year' => $date->year,
-                    'month' => $date->month,
-                    'day' => $date->day,
-                    'withinMonth' => $date->between($monthStart, $monthEnd),
-                ])
-                ->chunk(7),
-            'days' => $monthEnd->isPast()
-                ? collect()
-                : collect($monthStart->toPeriod($monthEnd)->toArray())
-                    ->map(fn ($date) => [
-                        'path' => $date->format('/Y/m/d'),
-                        'date' => $date,
-                        'pages' => Calendar::pagesForDate($yaml, $date),
-                    ])
-        ];
+        return request()->hasHeader('X-Printing-Pdf') || $this->useAnchors
+            ? '#' . $anchor
+            : '/' . $anchor;
     }
 
-    public static function pagesForDate($yaml, $date)
+    public function anchor(Carbon|CarbonImmutable|string $date, $anchorFormat)
     {
-        return collect(data_get($yaml, 'days.' . strtolower($date->format('l'))) ?: [['template' => 'todo']])
-            ->map(function ($page) {
-                $template = data_get($page, 'template', 'todo');
-                $lines = collect(data_get($page, 'lines', []));
-
-                return [
-                    'template' => $template,
-                    'lines' => $template == 'blank'
-                        ? []
-                        : collect(range(1, 22))
-                            ->map(fn ($index) => $lines->get($index - 1, ''))
-                ];
-            });
+        return is_string($date) ? $date : $date->format($anchorFormat ?? $this->anchorFormat);
     }
 }

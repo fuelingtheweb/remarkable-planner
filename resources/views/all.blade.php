@@ -9,12 +9,12 @@
     @vite(['resources/css/app.css'])
 </head>
 <body>
-    <x-year :calendar="$calendar" />
+    <x-year :year="$year" />
 
-    @foreach ($calendar['months'] as $month)
-        @foreach ($month['days'] as $day)
-            @foreach ($day['pages'] as $page)
-                <x-day :calendar="$month" :date="$day['date']" :template="$page['template']" :lines="$page['lines']" />
+    @foreach ($year->months() as $month)
+        @foreach ($month->days() as $day)
+            @foreach ($day->pages() as $page)
+                <x-day :day="$day" :month="$month" :page="$page" />
             @endforeach
         @endforeach
     @endforeach
