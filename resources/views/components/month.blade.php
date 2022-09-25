@@ -23,7 +23,7 @@
     </thead>
     <tbody>
         @foreach ($month->weeks() as $days)
-            <tr class="{{ $selectedDate && $days->filter(fn ($day) => $day->date->is($selectedDate))->isNotEmpty() ? 'border' : '' }}">
+            <tr class="{{ $selectedDate && $days->filter(fn ($day) => $day->date->is($selectedDate))->isNotEmpty() ? 'border' : 'border-t border-transparent' }}">
                 @foreach ($days as $day)
                     <td>
                         <a
