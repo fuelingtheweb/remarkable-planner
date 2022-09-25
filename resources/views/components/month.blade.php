@@ -34,6 +34,7 @@
                                 hover:bg-gray-300
                                 {{ $day->isNotWithin($month) ? 'text-gray-300' : '' }}
                                 {{ $day->is($selectedDate) ? 'font-bold bg-gray-200' : '' }}
+                                {{ $day->hasEvents() ? 'border border-gray-800' : '' }}
                             "
                         >
                             {{ $day->label() }}

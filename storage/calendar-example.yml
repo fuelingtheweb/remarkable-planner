@@ -37,3 +37,7 @@ days:
   saturday:
     - template: todo
     - template: notes
+
+events:
+  01-01:
+    - New Year's Day

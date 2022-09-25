@@ -33,6 +33,17 @@ class Day
             });
     }
 
+    public function hasEvents()
+    {
+        return ! empty($this->events());
+    }
+
+
+    public function events()
+    {
+        return data_get($this->config(), 'events.' . $this->date->format('m-d'), []);
+    }
+
     public function is($date)
     {
         return $date && $this->date->is($date);

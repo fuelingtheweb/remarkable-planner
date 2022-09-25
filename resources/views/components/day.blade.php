@@ -4,38 +4,48 @@
     <a name="{{ $day->anchorWithIndex(index: $index) }}"></a>
 
     <div class="flex items-center justify-between px-1 pt-5">
-        <div class="ml-2 w-[205px] text-center">
-            <div class="text-lg tracking-widest uppercase">
-                {{ $month->label() }}
-            </div>
+        <div class="flex">
+            <div class="ml-2 w-[205px] text-center flex-none">
+                <div class="text-lg tracking-widest uppercase">
+                    {{ $month->label() }}
+                </div>
 
-            <div class="flex items-center justify-center gap-0.5 text-7xl font-bold leading-[3.8rem]">
-                <a href="{{ $day->previousPath() }}" class="text-gray-400 hover:bg-gray-300">
-                    <x-icons.arrow-left />
-                </a>
-
-                <span>
-                    {{ $day->label() }}
-                </span>
-
-                <a href="{{ $day->nextPath() }}" class="text-gray-400 hover:bg-gray-300">
-                    <x-icons.arrow-right />
-                </a>
-            </div>
-
-            <div class="text-3xl tracking-widest uppercase">
-                {{ $day->weekdayLabel() }}
-            </div>
-
-            <div class="flex justify-center gap-2">
-                @foreach ($day->pages() as $iconIndex => $iconPage)
-                    <a
-                        href="#{{ $day->anchorWithIndex(index: $iconIndex) }}"
-                        class="{{ $iconIndex === $index ? 'text-black' : 'text-gray-400' }} hover:bg-gray-300"
-                    >
-                        <x-dynamic-component component="icons.{{ $iconPage['template'] }}" />
+                <div class="flex items-center justify-center gap-0.5 text-7xl font-bold leading-[3.8rem]">
+                    <a href="{{ $day->previousPath() }}" class="text-gray-400 hover:bg-gray-300">
+                        <x-icons.arrow-left />
                     </a>
-                @endforeach
+
+                    <span>
+                        {{ $day->label() }}
+                    </span>
+
+                    <a href="{{ $day->nextPath() }}" class="text-gray-400 hover:bg-gray-300">
+                        <x-icons.arrow-right />
+                    </a>
+                </div>
+
+                <div class="text-3xl tracking-widest uppercase">
+                    {{ $day->weekdayLabel() }}
+                </div>
+
+                <div class="flex justify-center gap-2">
+                    @foreach ($day->pages() as $iconIndex => $iconPage)
+                        <a
+                            href="#{{ $day->anchorWithIndex(index: $iconIndex) }}"
+                            class="{{ $iconIndex === $index ? 'text-black' : 'text-gray-400' }} hover:bg-gray-300"
+                        >
+                            <x-dynamic-component component="icons.{{ $iconPage['template'] }}" />
+                        </a>
+                    @endforeach
+                </div>
+            </div>
+
+            <div>
+                <ul class="pt-1 pl-4 text-xs italic list-disc">
+                    @foreach ($day->events() as $event)
+                        <li>{{ $event }}</li>
+                    @endforeach
+                </ul>
             </div>
         </div>
 
