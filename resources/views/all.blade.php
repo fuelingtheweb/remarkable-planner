@@ -13,8 +13,8 @@
 
     @foreach ($year->months() as $month)
         @foreach ($month->days() as $day)
-            @foreach ($day->pages() as $page)
-                <x-day :day="$day" :month="$month" :page="$page" />
+            @foreach ($day->pages() as $index => $page)
+                <x-day :day="$day" :month="$month" :page="$page" :index="$index" />
             @endforeach
         @endforeach
     @endforeach
