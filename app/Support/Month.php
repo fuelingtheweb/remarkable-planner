@@ -56,7 +56,7 @@ class Month
         $monthStart = $this->date->startOfMonth();
         $monthEnd = $this->date->endOfMonth();
 
-        return $monthEnd->isPast() || $monthStart->isFuture()
+        return $monthEnd->isPast()
             ? collect()
             : collect($monthStart->toPeriod($monthEnd)->toArray())
                 ->map(fn ($date) => new Day($date->year, $date->month, $date->day));
