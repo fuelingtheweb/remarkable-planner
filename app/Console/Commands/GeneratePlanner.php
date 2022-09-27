@@ -23,7 +23,7 @@ class GeneratePlanner extends Command
             ->showBackground()
             ->paperSize(596, 795, 'px')
             ->timeout(120)
-            ->save(storage_path('planner.pdf'));
+            ->save(storage_path('app/planner.pdf'));
 
         $this->info('Planner generated');
     }
