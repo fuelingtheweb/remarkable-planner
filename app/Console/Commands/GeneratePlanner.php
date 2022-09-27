@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
 
 class GeneratePlanner extends Command
@@ -23,7 +24,7 @@ class GeneratePlanner extends Command
             ->showBackground()
             ->paperSize(596, 795, 'px')
             ->timeout(120)
-            ->save(storage_path('app/planner.pdf'));
+            ->save(Storage::path('planner.pdf'));
 
         $this->info('Planner generated');
     }
