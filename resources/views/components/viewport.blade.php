@@ -14,7 +14,7 @@
     <form action="{{ route('generate-pdf')}}" method="post">
         @csrf
         <div class="flex justify-center">
-            <button type="submit" class="px-5 py-3 text-white bg-black rounded-sm" >Generate pdf</button>
+            <button type="submit" class="px-5 py-3 text-white bg-black rounded-sm">Generate pdf</button>
         </div>
     </form>
 @endif
