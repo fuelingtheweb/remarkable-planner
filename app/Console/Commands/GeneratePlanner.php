@@ -2,7 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\GeneratePdf;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Storage;
 use Spatie\Browsershot\Browsershot;
 
 class GeneratePlanner extends Command
@@ -13,17 +15,7 @@ class GeneratePlanner extends Command
 
     public function handle()
     {
-        // reMarkable screen size: https://support.remarkable.com/hc/en-us/articles/360006699557
-        // original tablet pixel size / table dpi * browser dpi
-        // 1404 / 226 * 96
-        // 1872 / 226 * 96
-
-        Browsershot::url(url('/all'))
-            ->setExtraHttpHeaders(['X-Printing-Pdf' => 'true'])
-            ->showBackground()
-            ->paperSize(596, 795, 'px')
-            ->timeout(120)
-            ->save(storage_path('planner.pdf'));
+        GeneratePdf::dispatch();
 
         $this->info('Planner generated');
     }
